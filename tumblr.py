@@ -5,12 +5,20 @@ import re
 
 
 def format_name(horse):
-    #removes / in the URL and numbers at the end
+    # removes / in the URL and numbers at the end
     ret = re.sub("[\/]|\d+$", "", horse)
     #removes + seperators
     ret = re.sub("\+", " ", ret)
     ret = ret.upper()
     return ret
+
+
+def create_post(horse):
+    title = f"Random Real Thoroughbred: {format_name(horse)}"
+    body = f"Link to their pedigreequery page: \n <a href=\"https://www.pedigreequery.com{horse}\">https://www.pedigreequery.com{horse}</a>"
+    if horse == "/at+the+station2":
+        body += "<hr>Wow, this is my horse, what are the odds?"
+    client.create_text(blog, state="published", title=title, body=body)
 
 
 client = pytumblr.TumblrRestClient(
@@ -25,4 +33,4 @@ horse_list = settings.horse_list
 horse = random.choice(horse_list)
 
 print(horse)
-print(format_name(horse))
+create_post("/at+the+station2")
