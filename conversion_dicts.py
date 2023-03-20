@@ -3,6 +3,7 @@ sexes = {
     "H": "horse",
     "G": "gelding",
     "C": "colt",
+    "F": "filly"
 }
 
 colors = {
