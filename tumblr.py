@@ -6,21 +6,36 @@ import requests
 from bs4 import BeautifulSoup
 
 sexes = {
-    "M" : "mare",
-    "H" : "horse",
-    "G" : "gelding"
+    "M": "mare",
+    "H": "horse",
+    "G": "gelding",
+    "C": "colt"
 }
 
 colors = {
-    "gr" : "gray",
-    "b" : "bay",
-    "ch" : "chesnut",
-    "dkb/br" : "dark bay/brown",
-    "gr/r" : "gray/roan",
-    "pal" : "palomino",
-    "br" : "brown",
-    "blk" : "black",
-    "buck" : "buckskin",
+    "gr": "gray",
+    "b": "bay",
+    "ch": "chesnut",
+    "dkb/br": "dark bay/brown",
+    "gr/r": "gray/roan",
+    "pal": "palomino",
+    "br": "brown",
+    "blk": "black",
+    "buck": "buckskin",
+}
+
+countries = {
+    "USA" : "United States",
+    "CAN" : "Canada",
+    "ARG" : "Argentina",
+    "AUS" : "Australia",
+    "GER" : "Germany",
+    "GB" : "Great Britain",
+    "IRE" : "Ireland",
+    "NZ" : "New Zealand",
+    "JPN" : "Japan",
+    "IND": "India",
+    "VEN" : "Venezuela"
 }
 
 def format_name(horse):
@@ -68,6 +83,11 @@ def get_info(horse):
     country = re.search("\(.*?\)", results)
     if country:
         country = country.group()[1:-1]
+        try:
+            country = countries[country]
+        except KeyError:
+            with open("dict_problems.txt", "a") as f:
+                f.write(f"\ncountry: {country} \n{results}\n")
     else:
         country = "Country Not Recorded"
 
@@ -75,12 +95,22 @@ def get_info(horse):
     print(color)
     if color:
         color = color.group()[1:-1]
+        try:
+            color = colors[color]
+        except KeyError:
+            with open("dict_problems.txt", "a") as f:
+                f.write(f"\ncolor: {color} \n{results}\n")
     else:
         color = "Color Not Recorded"
 
     sex = re.search(" [A-Z]+,", results)
     if sex:
         sex = sex.group()[1:-1]
+        try:
+            sex = sexes[sex]
+        except KeyError:
+            with open("dict_problems.txt", "a") as f:
+                f.write(f"\nsex: {sex} \n{results}\n")
     else:
         sex = "Sex Not Recorded"
 
