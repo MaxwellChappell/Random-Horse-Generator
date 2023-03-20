@@ -4,11 +4,12 @@ import settings
 import re
 import requests
 from bs4 import BeautifulSoup
-import conversion_dicts 
+import conversion_dicts
 
 sexes = conversion_dicts.sexes
-countries  = conversion_dicts.countries
+countries = conversion_dicts.countries
 colors = conversion_dicts.colors
+
 
 def format_name(horse):
     # removes / in the URL and numbers at the end
@@ -43,7 +44,8 @@ def get_info(horse):
         elif "m" in line["class"]:
             sire = line.find("a").text
 
-    results = soup.find("font").text.split("\n")[0]
+    results = soup.find("font").text.split(
+        "\n")[0][len(horse):]
 
     print(results)
     year = re.search("\d\d\d\d[\?]*$", results)
@@ -59,7 +61,7 @@ def get_info(horse):
             country = countries[country]
         except KeyError:
             with open("dict_problems.txt", "a") as f:
-                f.write(f"\ncountry: {country} \n{results}\n")
+                f.write(f"\ncountry: {country} \n{results}\n{horse}\n")
     else:
         country = "Country Not Recorded"
 
@@ -70,7 +72,7 @@ def get_info(horse):
             color = colors[color]
         except KeyError:
             with open("dict_problems.txt", "a") as f:
-                f.write(f"\ncolor: {color} \n{results}\n")
+                f.write(f"\ncolor: {color} \n{results}\n{horse}\n")
     else:
         color = "Color Not Recorded"
 
@@ -81,10 +83,11 @@ def get_info(horse):
             sex = sexes[sex]
         except KeyError:
             with open("dict_problems.txt", "a") as f:
-                f.write(f"\nsex: {sex} \n{results}\n")
+                f.write(f"\nsex: {sex} \n{results}\n{horse}\n")
     else:
         sex = "Sex Not Recorded"
 
+    print(repr(results))
     story = f"{format_name(horse)} is a {color} {sex} born in {country} in {year}"
     print(story)
 
