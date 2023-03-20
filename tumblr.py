@@ -5,6 +5,23 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
+sexes = {
+    "M" : "mare",
+    "H" : "horse",
+    "G" : "gelding"
+}
+
+colors = {
+    "gr" : "gray",
+    "b" : "bay",
+    "ch" : "chesnut",
+    "dkb/br" : "dark bay/brown",
+    "gr/r" : "gray/roan",
+    "pal" : "palomino",
+    "br" : "brown",
+    "blk" : "black",
+    "buck" : "buckskin",
+}
 
 def format_name(horse):
     # removes / in the URL and numbers at the end
@@ -57,7 +74,7 @@ def get_info(horse):
     color = re.search(" [a-zA-Z\/a-zA-z]+\.", results)
     print(color)
     if color:
-        color = color.group()[1:]
+        color = color.group()[1:-1]
     else:
         color = "Color Not Recorded"
 
