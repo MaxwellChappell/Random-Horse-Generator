@@ -44,8 +44,9 @@ def get_info(horse):
         elif "m" in line["class"]:
             sire = line.find("a").text
 
-    results = soup.find("font").text.split(
-        "\n")[0][len(horse):]
+    results = soup.find("font")
+    name = results.find("a").text
+    results = results.text.split("\n")[0].replace(name,"")
 
     print(results)
     year = re.search("\d\d\d\d[\?]*$", results)
