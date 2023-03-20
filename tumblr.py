@@ -4,39 +4,11 @@ import settings
 import re
 import requests
 from bs4 import BeautifulSoup
+import conversion_dicts 
 
-sexes = {
-    "M": "mare",
-    "H": "horse",
-    "G": "gelding",
-    "C": "colt"
-}
-
-colors = {
-    "gr": "gray",
-    "b": "bay",
-    "ch": "chesnut",
-    "dkb/br": "dark bay/brown",
-    "gr/r": "gray/roan",
-    "pal": "palomino",
-    "br": "brown",
-    "blk": "black",
-    "buck": "buckskin",
-}
-
-countries = {
-    "USA" : "United States",
-    "CAN" : "Canada",
-    "ARG" : "Argentina",
-    "AUS" : "Australia",
-    "GER" : "Germany",
-    "GB" : "Great Britain",
-    "IRE" : "Ireland",
-    "NZ" : "New Zealand",
-    "JPN" : "Japan",
-    "IND": "India",
-    "VEN" : "Venezuela"
-}
+sexes = conversion_dicts.sexes
+countries  = conversion_dicts.countries
+colors = conversion_dicts.colors
 
 def format_name(horse):
     # removes / in the URL and numbers at the end
@@ -92,7 +64,6 @@ def get_info(horse):
         country = "Country Not Recorded"
 
     color = re.search(" [a-zA-Z\/a-zA-z]+\.", results)
-    print(color)
     if color:
         color = color.group()[1:-1]
         try:
