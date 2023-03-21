@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import sys
 import pytumblr
 import random
@@ -13,9 +14,9 @@ def create_post(horse, client = None, blog = None, real=True):
         create_post(new_horse, client, blog) 
         sys.exit(1)
     title = f"Random Real Thoroughbred: {name}"
-    body = f"{story}<hr><hr>Link to their pedigreequery page: <a href={link}>{link}</a>"
+    body = f"{story}<br><br>Link to their pedigreequery page: <a href={link}>{link}</a>"
     if horse == "/at+the+station2":
-        body += "<hr><b>Wow, this is my horse, what are the odds?</b>"
+        body += "<br><b>Wow, this is my horse, what are the odds?</b>"
     if real:
         client.create_text(blog, state="published", title=title, body=body, tags=[horse]) 
     else:
