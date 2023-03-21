@@ -69,6 +69,7 @@ countries = {
     "NZ": "New Zealand",
     "OM": "Oman",
     "PAK": "Pakistan",
+    "PAN": "Panama",
     "PER": "Peru",
     "PHI": "Philippines",
     "POL": "Poland",
@@ -79,7 +80,10 @@ countries = {
     "RUM": "Romania",
     "RUS": "Russia",
     "SAF": "South Africa",
+    "SDA": "Saudi Arabia",
+    "SLO": "Slovak Republic",
     "SPA": "Spain",
+    "SRB": "Serbia",
     "SVK": "Slovakia",
     "SVN": "Slovenia",
     "SWE": "Sweden",
@@ -94,5 +98,6 @@ countries = {
     "USA": "The United States",
     "UZB": "Uzbekistan",
     "VEN": "Venezuela",
+    "YU": "Yugoslavia",
     "ZIM": "Zimbabwe"
 }
