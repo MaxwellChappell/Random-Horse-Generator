@@ -9,7 +9,7 @@ and takes that name and scraps some information from their pedigree page, and th
 
 <h3>Skills and Technologies Used</h3>
 <ul>
-<li>Webscrapping</li>
+<li>Webscraping</li>
 <li>Regular Expressions</li>
 <li>Tumblr API</li>
 </ul>
