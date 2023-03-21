@@ -20,11 +20,8 @@ def get_info(horse):
 
     results = results.text.split("\n")[0].replace(name, "")
 
-    year = re.search("\d\d\d\d[\?]*$", results)
-    if year:
-        year = year.group()
-    else:
-        year = "Year Not Recorded"
+    year = find_year(results)
+
 
     country = re.search("\(.*?\)", results)
     if country:
@@ -73,3 +70,10 @@ def find_parents(soup):
         elif "m" in line["class"]:
             sire = line.find("a").text
     return sire, dame
+
+def find_year(info):
+    year = re.search("\d\d\d\d[\?]*$", info)
+    if year:
+        return year.group()
+    else:
+        return "Year Not Recorded"
