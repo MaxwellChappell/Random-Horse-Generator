@@ -14,7 +14,7 @@ def get_info(horse):
 
     soup = BeautifulSoup(page.content, "html.parser")
 
-    sire, dame = find_parents(soup)
+    sire, dam = find_parents(soup)
 
     info_string = soup.find("font")
     name = info_string.find("a").text
@@ -26,10 +26,42 @@ def get_info(horse):
     color = find_color(info_string, horse)
     sex = find_sex(info_string, horse)
 
-    # print(repr(results))
-    story = f"{name} is a {color} {sex} born in {country} in {year}. By {sire} out of {dame}."
-    link = f"https://www.pedigreequery.com{horse}"
-    return name, story, link
+    story = create_story(name, color, sex, country, year, sire, dam)
+
+    return name, story, url
+
+def create_story(name, color, sex, country, year, sire, dam):
+    reject = "Not Recorded"
+    if "Not Recorded" not in (name, color, sex, country, year, sire, dam):
+        return f"{name} is a {color} {sex} born in {country} in {year}. By {sire} out of {dam}."
+   
+    story = name
+    if reject not in (color, sex):
+        story += f" is a {color} {sex}"
+    elif color == sex:
+        story += " is mysterious creature"
+    elif reject in color:
+        story += f" is a {sex}"
+    else:
+        story += f" is a {color} creature"
+
+    if reject not in (country, year):
+        story += f" born in {country} in {year}."
+    elif country == year:
+        story += "."
+    elif reject != country:
+        story += f" born in {country}."
+    else:
+        story += f" born in {year}."
+
+    if reject not in (sire, dam):
+        story += f" By {sire} out of {dam}."
+    elif reject in sire and sire != dam:
+        story += f" Out of {dam}."
+    elif reject in dam and dam != sire:
+        story += f" By {sire}."
+
+    return story
 
 
 def find_parents(soup):
@@ -49,7 +81,7 @@ def find_year(info):
     if year:
         return year.group()
     else:
-        return "Year Not Recorded"
+        return "Not Recorded"
 
 
 def find_trait(trait_category, d, regex, results, horse):
@@ -61,7 +93,7 @@ def find_trait(trait_category, d, regex, results, horse):
             return trait
         except KeyError:
             record_KeyError(trait_category, trait, results, horse)
-    return f"{trait_category.upper()} Not Recorded"
+    return "Not Recorded"
 
 
 def find_country(info, horse):

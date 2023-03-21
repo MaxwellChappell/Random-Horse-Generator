@@ -22,6 +22,7 @@ client = pytumblr.TumblrRestClient(
 
 blog = settings.blog_name
 horse_list = settings.horse_list
-
-horse = random.choice(horse_list)
-create_post(horse)
+for i in range(100):
+    horse = random.choice(horse_list)
+    create_post(horse)
+    print()
