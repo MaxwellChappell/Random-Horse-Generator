@@ -16,15 +16,15 @@ def get_info(horse):
 
     sire, dame = find_parents(soup)
 
-    results = soup.find("font")
-    name = results.find("a").text
+    info_string = soup.find("font")
+    name = info_string.find("a").text
 
-    results = results.text.split("\n")[0].replace(name, "")
+    info_string = info_string.text.split("\n")[0].replace(name, "")
 
-    year = find_year(results)
-    country = find_country(results, horse)
-    color = find_color(results, horse)
-    sex = find_sex(results, horse)
+    year = find_year(info_string)
+    country = find_country(info_string, horse)
+    color = find_color(info_string, horse)
+    sex = find_sex(info_string, horse)
 
     # print(repr(results))
     story = f"{name} is a {color} {sex} born in {country} in {year}. By {sire} out of {dame}."
@@ -64,16 +64,16 @@ def find_trait(trait_category, d, regex, results, horse):
     return f"{trait_category.upper()} Not Recorded"
 
 
-def find_country(results, horse):
-    return find_trait("country", countries, "\(.*?\)", results, horse)
+def find_country(info, horse):
+    return find_trait("country", countries, "\(.*?\)", info, horse)
 
 
-def find_color(results, horse):
-    return find_trait("color", colors, " [a-zA-Z\/a-zA-z]+\.", results, horse)
+def find_color(info, horse):
+    return find_trait("color", colors, " [a-zA-Z\/a-zA-z]+\.", info, horse)
 
 
-def find_sex(results, horse):
-    return find_trait("sex", sexes, " [A-Z]+,", results, horse)
+def find_sex(info, horse):
+    return find_trait("sex", sexes, " [A-Z]+,", info, horse)
 
 
 def record_KeyError(trait, missing_key, results, horse):
