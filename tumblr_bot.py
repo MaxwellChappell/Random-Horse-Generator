@@ -15,7 +15,7 @@ def create_post(horse, client = None, blog = None, real=True):
     title = f"Random Real Thoroughbred: {name}"
     body = f"{story}<hr><hr>Link to their pedigreequery page: <a href={link}>{link}</a>"
     if horse == "/at+the+station2":
-        body += "<hr>Wow, this is my horse, what are the odds?"
+        body += "<hr><b>Wow, this is my horse, what are the odds?</b>"
     if real:
         client.create_text(blog, state="published", title=title, body=body, tags=[horse]) 
     else:
