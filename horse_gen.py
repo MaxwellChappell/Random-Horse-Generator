@@ -13,18 +13,9 @@ def get_info(horse):
 
     soup = BeautifulSoup(page.content, "html.parser")
 
-    results = soup.find_all("td", {"data-g": "1"})
-
-    sire = "Not Recorded"
-    dame = "Not Recorded"
-    for line in results:
-        if "f" in line["class"]:
-            dame = line.find("a").text
-        elif "m" in line["class"]:
-            sire = line.find("a").text
+    sire, dame = find_parents(soup)
 
     results = soup.find("font")
-
     name = results.find("a").text
 
     results = results.text.split("\n")[0].replace(name, "")
@@ -71,3 +62,14 @@ def get_info(horse):
 
     #print(repr(results))
     story = f"{name} is a {color} {sex} born in {country} in {year}"
+
+def find_parents(soup):
+    results = soup.find_all("td", {"data-g": "1"})
+    sire = "Not Recorded"
+    dame = "Not Recorded"
+    for line in results:
+        if "f" in line["class"]:
+            dame = line.find("a").text
+        elif "m" in line["class"]:
+            sire = line.find("a").text
+    return sire, dame
