@@ -21,41 +21,9 @@ def get_info(horse):
     results = results.text.split("\n")[0].replace(name, "")
 
     year = find_year(results)
-
-
-    country = re.search("\(.*?\)", results)
-    if country:
-        country = country.group()[1:-1]
-        try:
-            country = countries[country]
-        except KeyError:
-            with open("dict_problems.txt", "a") as f:
-                f.write(f"\ncountry: {country} \n{results}\n{horse}\n")
-    else:
-        country = "Country Not Recorded"
-
-    color = re.search(" [a-zA-Z\/a-zA-z]+\.", results)
-    if color:
-        color = color.group()[1:-1]
-        try:
-            color = colors[color]
-        except KeyError:
-            with open("dict_problems.txt", "a") as f:
-                f.write(f"\ncolor: {color} \n{results}\n{horse}\n")
-    else:
-        color = "Color Not Recorded"
-
-    sex = re.search(" [A-Z]+,", results)
-    if sex:
-        sex = sex.group()[1:-1]
-        try:
-            sex = sexes[sex]
-
-        except KeyError:
-            with open("dict_problems.txt", "a") as f:
-                f.write(f"\nsex: {sex} \n{results}\n{horse}\n")
-    else:
-        sex = "Sex Not Recorded"
+    country = find_country(results, horse)
+    color = find_color(results, horse)
+    sex = find_sex(results, horse)
 
     #print(repr(results))
     story = f"{name} is a {color} {sex} born in {country} in {year}"
@@ -77,3 +45,42 @@ def find_year(info):
         return year.group()
     else:
         return "Year Not Recorded"
+
+def find_country(results, horse):
+    country = re.search("\(.*?\)", results)
+    if country:
+        country = country.group()[1:-1]
+        try:
+            country = countries[country]
+            return country
+        except KeyError:
+            with open("dict_problems.txt", "a") as f:
+                f.write(f"\ncountry: {country} \n{results}\n{horse}\n")
+    else:
+        return "Country Not Recorded"
+    
+def find_color(results, horse):
+    color = re.search(" [a-zA-Z\/a-zA-z]+\.", results)
+    if color:
+        color = color.group()[1:-1]
+        try:
+            color = colors[color]
+            return color
+        except KeyError:
+            with open("dict_problems.txt", "a") as f:
+                f.write(f"\ncolor: {color} \n{results}\n{horse}\n")
+    else:
+        return "Color Not Recorded"
+
+def find_sex(results, horse):
+    sex = re.search(" [A-Z]+,", results)
+    if sex:
+        sex = sex.group()[1:-1]
+        try:
+            sex = sexes[sex]
+            return sex
+        except KeyError:
+            with open("dict_problems.txt", "a") as f:
+                f.write(f"\nsex: {sex} \n{results}\n{horse}\n")
+    else:
+        return "Sex Not Recorded"
