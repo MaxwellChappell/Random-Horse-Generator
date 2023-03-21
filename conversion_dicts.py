@@ -64,7 +64,7 @@ countries = {
     "LTU": "Lithuania",
     "LUX": "Luxemburg",
     "MAL": "Malaysia",
-    "MAR" : "Martinique",
+    "MAR": "Martinique",
     "MEX": "Mexico",
     "MOR": "Morocco",
     "NOR": "Norway",

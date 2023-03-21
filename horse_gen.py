@@ -7,8 +7,12 @@ sexes = conversion_dicts.sexes
 countries = conversion_dicts.countries
 colors = conversion_dicts.colors
 
+error = False
+
 
 def get_info(horse):
+    global error
+    error = False
     url = "https://www.pedigreequery.com" + horse
     page = requests.get(url)
 
@@ -28,6 +32,8 @@ def get_info(horse):
 
     story = create_story(name, color, sex, country, year, sire, dam)
 
+    if error:
+        raise Exception("Horse requires dictionary update")
     return name, story, url
 
 
@@ -76,8 +82,11 @@ def find_trait(trait_category, d, regex, results, horse):
 
 
 def record_KeyError(trait, missing_key, results, horse):
+    global error
     with open("dict_problems.txt", "a") as f:
         f.write(f"\n{trait}: {missing_key} \n{results}\n{horse}\n")
+        error = True
+
 
 def create_story(name, color, sex, country, year, sire, dam):
     reject = "Not Recorded"
