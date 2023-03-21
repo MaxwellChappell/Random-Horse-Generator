@@ -54,8 +54,7 @@ def find_country(results, horse):
             country = countries[country]
             return country
         except KeyError:
-            with open("dict_problems.txt", "a") as f:
-                f.write(f"\ncountry: {country} \n{results}\n{horse}\n")
+            record_KeyError("country", country, results, horse)
     else:
         return "Country Not Recorded"
     
@@ -67,8 +66,7 @@ def find_color(results, horse):
             color = colors[color]
             return color
         except KeyError:
-            with open("dict_problems.txt", "a") as f:
-                f.write(f"\ncolor: {color} \n{results}\n{horse}\n")
+            record_KeyError("color", color, results, horse)
     else:
         return "Color Not Recorded"
 
@@ -80,7 +78,10 @@ def find_sex(results, horse):
             sex = sexes[sex]
             return sex
         except KeyError:
-            with open("dict_problems.txt", "a") as f:
-                f.write(f"\nsex: {sex} \n{results}\n{horse}\n")
+            record_KeyError("sex", sex, results, horse)
     else:
         return "Sex Not Recorded"
+    
+def record_KeyError(trait, missing_key, results, horse):
+     with open("dict_problems.txt", "a") as f:
+        f.write(f"\n{trait}: {missing_key} \n{results}\n{horse}\n")
