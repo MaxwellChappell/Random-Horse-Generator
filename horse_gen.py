@@ -27,7 +27,7 @@ def get_info(horse):
     sex = find_sex(results, horse)
 
     # print(repr(results))
-    story = f"{name} is a {color} {sex} born in {country} in {year}\nBy {sire} out of {dame}"
+    story = f"{name} is a {color} {sex} born in {country} in {year}. By {sire} out of {dame}."
     link = f"https://www.pedigreequery.com{horse}"
     return name, story, link
 
