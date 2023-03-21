@@ -52,43 +52,28 @@ def find_year(info):
         return "Year Not Recorded"
 
 
-def find_country(results, horse):
-    country = re.search("\(.*?\)", results)
-    if country:
-        country = country.group()[1:-1]
+def find_trait(trait_category, d, regex, results, horse):
+    trait = re.search(regex, results)
+    if trait:
+        trait = trait.group()[1:-1]
         try:
-            country = countries[country]
-            return country
+            trait = d[trait]
+            return trait
         except KeyError:
-            record_KeyError("country", country, results, horse)
-    else:
-        return "Country Not Recorded"
+            record_KeyError(trait_category, trait, results, horse)
+    return f"{trait_category.upper()} Not Recorded"
+
+
+def find_country(results, horse):
+    return find_trait("country", countries, "\(.*?\)", results, horse)
 
 
 def find_color(results, horse):
-    color = re.search(" [a-zA-Z\/a-zA-z]+\.", results)
-    if color:
-        color = color.group()[1:-1]
-        try:
-            color = colors[color]
-            return color
-        except KeyError:
-            record_KeyError("color", color, results, horse)
-    else:
-        return "Color Not Recorded"
+    return find_trait("color", colors, " [a-zA-Z\/a-zA-z]+\.", results, horse)
 
 
 def find_sex(results, horse):
-    sex = re.search(" [A-Z]+,", results)
-    if sex:
-        sex = sex.group()[1:-1]
-        try:
-            sex = sexes[sex]
-            return sex
-        except KeyError:
-            record_KeyError("sex", sex, results, horse)
-    else:
-        return "Sex Not Recorded"
+    return find_trait("sex", sexes, " [A-Z]+,", results, horse)
 
 
 def record_KeyError(trait, missing_key, results, horse):
