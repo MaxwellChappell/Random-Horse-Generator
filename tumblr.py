@@ -11,8 +11,6 @@ def create_post(horse):
         body += "<hr>Wow, this is my horse, what are the odds?"
     client.create_text(blog, state="published", title=title, body=body)
 
-
-
 client = pytumblr.TumblrRestClient(
     settings.key,
     settings.key_secret,
@@ -26,6 +24,7 @@ for i in range(100):
     horse = random.choice(horse_list)
 
     print(horse)
-    horse_gen.get_info(horse)
+    name, story, link = horse_gen.get_info(horse)
+    print(name, story, link, sep="\n")
     print()
 # create_post("/at+the+station2")

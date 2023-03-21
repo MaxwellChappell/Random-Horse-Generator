@@ -7,6 +7,7 @@ sexes = conversion_dicts.sexes
 countries = conversion_dicts.countries
 colors = conversion_dicts.colors
 
+
 def get_info(horse):
     url = "https://www.pedigreequery.com" + horse
     page = requests.get(url)
@@ -25,8 +26,11 @@ def get_info(horse):
     color = find_color(results, horse)
     sex = find_sex(results, horse)
 
-    #print(repr(results))
-    story = f"{name} is a {color} {sex} born in {country} in {year}"
+    # print(repr(results))
+    story = f"{name} is a {color} {sex} born in {country} in {year}\nBy {sire} out of {dame}"
+    link = f"https://www.pedigreequery.com{horse}"
+    return name, story, link
+
 
 def find_parents(soup):
     results = soup.find_all("td", {"data-g": "1"})
@@ -39,12 +43,14 @@ def find_parents(soup):
             sire = line.find("a").text
     return sire, dame
 
+
 def find_year(info):
     year = re.search("\d\d\d\d[\?]*$", info)
     if year:
         return year.group()
     else:
         return "Year Not Recorded"
+
 
 def find_country(results, horse):
     country = re.search("\(.*?\)", results)
@@ -57,7 +63,8 @@ def find_country(results, horse):
             record_KeyError("country", country, results, horse)
     else:
         return "Country Not Recorded"
-    
+
+
 def find_color(results, horse):
     color = re.search(" [a-zA-Z\/a-zA-z]+\.", results)
     if color:
@@ -70,6 +77,7 @@ def find_color(results, horse):
     else:
         return "Color Not Recorded"
 
+
 def find_sex(results, horse):
     sex = re.search(" [A-Z]+,", results)
     if sex:
@@ -81,7 +89,8 @@ def find_sex(results, horse):
             record_KeyError("sex", sex, results, horse)
     else:
         return "Sex Not Recorded"
-    
+
+
 def record_KeyError(trait, missing_key, results, horse):
-     with open("dict_problems.txt", "a") as f:
+    with open("dict_problems.txt", "a") as f:
         f.write(f"\n{trait}: {missing_key} \n{results}\n{horse}\n")
