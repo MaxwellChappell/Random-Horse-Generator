@@ -17,7 +17,7 @@ colors = {
     "blk": "black",
     "blk/br": "black/brown",
     "buck": "buckskin",
-    "ro":"roan",
+    "ro": "roan",
 }
 
 countries = {
